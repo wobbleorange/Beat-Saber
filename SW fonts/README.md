@@ -4,7 +4,7 @@
 ![](AHS_example.png)
 
 ### Alagard
-![](alagar example.png)
+![](alagar_example.png)
 
 ### Geo
 ![](geo_example.png)
