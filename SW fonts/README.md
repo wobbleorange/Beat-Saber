@@ -1,5 +1,6 @@
 ## Blender fonts for SW (or whatever else)
-Geo and Alagard are the two with the lowest wall count. AHS is low as well, curved letters have a slightly higher count, but should cause no lag issues.
+Geo and Alagard are the two with the lowest wall count. AHS is low as well, curved letters have a slightly higher count, but shouldn't cause any lag issues.
+
 Handwrite unfortunately, ended up having too many walls per character to be easily used as lyrics. Can be used with environment enhancements. All CAPS only.
 
 ### American Horror Story
@@ -13,6 +14,6 @@ Handwrite unfortunately, ended up having too many walls per character to be easi
 
 ### handwrite
 (All CAPS only)
-[CR]
+
 ![](handwriteCAPS_example.png)
 
