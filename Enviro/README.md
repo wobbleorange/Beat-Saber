@@ -1,27 +1,33 @@
 ## modified environment scripts
-script is courtesy of swifter https://github.com/Swifter1243/BlenderToEnvironment
-scales have been modified as required for each environment/object used
+Script is courtesy of swifter https://github.com/Swifter1243/BlenderToEnvironment
 
-KDA, Timbaland, and GreenDay only work as lights (as far as I know)
-Billie could work as walls, but there are alignment issues.
+Scales have been modified as required for each environment/object used. view his page for full setup information.
+
+KDA, Timbaland, and GreenDay work with using lights.    Billie could work as walls, but there are alignment issues.
 
 ### KDA
-is using GlowLine for the lights.
-these will light with "Center Lights".
-if using chroma, and light individual ID's, but NOT "All Lights", the model will not glow, and look more like walls.
+Is using GlowLine for the lights.    These will light with "Center Lights".
 
+If using chroma, and only individual Center light ID's, NOT "All Lights", the model will not glow, and look more like walls.
+
+(lit with All Lights)
 ![](KDAexample.png)
+
+(lit without All Lights)
 ![](KDAexample-unlit.png)
 ![](KDAexample-unlit2.png)
 
 ### Timbaland
 I have two versions for this one.
-one is with the GlowLine as in KDA,
 
-the second is using LaserL and Laser R
-the js is setup to use track environmentL and environmentR (rather than just environment as for all the others)
+1. one is with the GlowLine as in KDA,
 
+2. the second is using LaserL and Laser R.    For this one, the js is setup to use tracks environmentL and environmentR (your SW would be set to these, one model for each side)
+
+(using Glowline)
 ![](TMCexample.png)
+
+(using Lasers)
 ![](TMCexample-laser.png)
 ![](TMCexample-laser2.png)
 
