@@ -31,6 +31,9 @@ I have two versions for this one.
 ![](TMCexample-laser.png)
 ![](TMCexample-laser2.png)
 
+(using GlowLing, unlit)
+![](TMCexample-unlit.png)
+
 ### GreenDay
 GD once again uses GlowLine, but has a hollow look to it.
 
