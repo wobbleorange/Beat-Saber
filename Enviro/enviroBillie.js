@@ -5,7 +5,6 @@ const mapOutput = "D:\\Games\\SteamLibrary\\steamapps\\common\\Beat Saber\\Beat 
 const fs = require("fs");
 const three = require("three");
 let map = JSON.parse(fs.readFileSync(mapInput));
-let count = 0
 const pillarToNoodleUnits = 0.1495;
 
 /*
@@ -50,8 +49,7 @@ function copy(obj) {
 
 map._notes.forEach(x => {
     if (x._customData && x._customData._track == trackName) {
-        count= count+1
-		var y = copy(x);
+        var y = copy(x);
 
         var pillarPos = y._customData._animation._definitePosition[0];
         var pillarRot = y._customData._animation._localRotation[0];
@@ -67,7 +65,7 @@ map._notes.forEach(x => {
         pillarScale[1] *= pillarToNoodleUnits * 36;
         pillarScale[2] *= pillarToNoodleUnits * 0.0825;
 
-        pillarPos[1] -= 0.05;
+        pillarPos[1] += 0.09;
         pillarPos[2] += 0.65 * (1 / 0.6);
 
         pillarPos[0] += offset[0];
@@ -75,22 +73,17 @@ map._notes.forEach(x => {
         pillarPos[2] += offset[2];
 
         map._customData._environment.push({
-            _id: "RightFarRail2$",
+            _id: "LeftFarRail1$",
             _lookupMethod: "Regex",
             _duplicate: 1,
             _position: pillarPos,
             _scale: pillarScale,
             _rotation: pillarRot,
-            _track: trackName + count,
+            _track: trackName,
             _active: true
         })
-		
-
     }
 });
-
-
-
 
 
 map._notes = map._notes.filter(x => !x._customData || (x._customData && !x._customData._track == trackName));
