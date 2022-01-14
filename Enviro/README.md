@@ -31,7 +31,7 @@ I have two versions for this one.
 ![](TMCexample-laser.png)
 ![](TMCexample-laser2.png)
 
-(using GlowLing, unlit)
+(using GlowLine, unlit)
 ![](TMCexample-unlit.png)
 
 ### GreenDay
@@ -52,5 +52,7 @@ Testing so far shows that reflecting color depends on the BackLasers color, if u
 
 
 ![](billie.png)
+
+(ALL lights not lit)
 ![](billie_unlit.png)
 
