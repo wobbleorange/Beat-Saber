@@ -10,14 +10,23 @@ Note animations don't need be past 0.4, as this is just before the player. For s
 
 Script is set to apply to all notes within range. Can easily be updated to make it track selective.
 
+
 domo
+
 ![](domo_note.png)
 
 flower
+
 ![](flower_note.png)
 
 spider
+
 ![](spider_note.png)
 
 hollow note
+
 ![](hollow_note.png)
+
+blender example. (don't export with the reference note)
+
+![](blender_ref.png)
