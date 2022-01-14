@@ -40,13 +40,17 @@ GD once again uses GlowLine, but has a hollow look to it.
 ![](GDexample.png)
 
 ### Billie
-Billie has problems with offset. Haven't investigated too far (the problem appears to be that the bottom is being used as the center, rather than the center)
+Billie has an offset issue, and will require one more step before use.
 
-you can use _id's LeftFarRail1, or RightFarRail1. They reflect differently depending on which one you use 
+A blender script has been added to set the object pivots to the right location. This needs to be done just before exporting to a dae file.
+
+You can use _id's LeftFarRail1, or RightFarRail1. They reflect differently depending on which one you use 
 (you can also try  LeftFarRail2, or RightFarRail2, and  LeftRail/ RightRail but these last two reflect ugly) 
+
 Testing so far shows that reflecting color depends on the BackLasers color, if using chroma and using individual and not All lights, there should be no reflection.
 
-(the photos show the misalignment between game and blender)
 
-![](BillieError.png)
-![](BillieError2.png)
+
+![](billie.png)
+![](billie_unlit.png)
+
