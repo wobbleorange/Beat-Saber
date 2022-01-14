@@ -49,10 +49,12 @@ You can use _id's LeftFarRail1, or RightFarRail1. They reflect differently depen
 
 Testing so far shows that reflecting color depends on the BackLasers color, if using chroma and using individual and not All lights, there should be no reflection.
 
-
-
 ![](billie.png)
 
 (ALL lights not lit)
 ![](billie_unlit.png)
 
+
+#### blender script
+beatsaber.py - install and will be located at the bottom of the Object menu.
+![](script.png)
