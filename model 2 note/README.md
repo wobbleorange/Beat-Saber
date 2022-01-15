@@ -1,8 +1,11 @@
 ## Model 2 Note
+### To create note models that follow mapped notes
 
-Model must be built centered at zero. A 0.5 scale cube can be placed for approximate reference. Try to stay a little bit back to not block the arrow (or dot).
+Scuffed walls is used to create the note model, the script attaches them to your mapped notes.
 
 Right now the script does not rotate the model to match the note direction.
+
+Model must be built centered at zero. A 0.5 scale cube can be placed for approximate reference. Try to stay a little bit back to not block the arrow (or dot).
 
 Export .dae same as usual, (apply, forward Z, up Y)
 
@@ -10,7 +13,7 @@ Note animations don't need be past 0.4, as this is just before the player. For s
 
 Script is set to apply to all notes within range. Can easily be updated to make it track selective.
 
-
+#### Examples
 domo
 
 ![](domo_note.png)
