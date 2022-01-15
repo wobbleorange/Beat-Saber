@@ -1,5 +1,5 @@
-## Model 2 Note
-### To create note models that follow mapped notes
+## Append Model 2 Note
+### Append a sw note model to mapped notes
 
 Scuffed walls is used to create the note model, the script attaches them to your mapped notes.
 
