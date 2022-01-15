@@ -22,7 +22,9 @@ Add the following to your SW script: (NOTE - ModelToWall does not need to be use
 0:ModelToWall
   path: Name of model file here. (E.G. path:model.dae)
   track: Name of track here. Must match "trackName" constant from this script, ie model2note
-  type:3 
+  type:3
+  interactable:false
+  fake:true
 This should run this whole script with node from SW on save of the JS script or the SW script.
 
 */
