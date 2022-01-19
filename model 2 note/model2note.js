@@ -1,3 +1,4 @@
+// ver 0.2
 const trackName = "model2note";
 const mapInput = "D:\\Games\\SteamLibrary\\steamapps\\common\\Beat Saber\\Beat Saber_Data\\CustomWIPLevels\\Noodle Testing\\NormalStandard.dat"
 const mapOutput = "D:\\Games\\SteamLibrary\\steamapps\\common\\Beat Saber\\Beat Saber_Data\\CustomWIPLevels\\Noodle Testing\\ExpertStandard.dat"
@@ -224,10 +225,11 @@ function hollowNote (beat, endBeat, NJS, NJSOffset) {
 
 
 // hollow note morph
+// scaling quirks make angle notes morph slightly different
 function hollowNoteMorph (beat, endBeat, NJS, NJSOffset) {
-  filterednotes = _notes.filter(n=> n._time >= beat && n._time < endBeat)
+  filterednotes = _notes.filter(n=> n._time >= beat && n._time < endBeat && n._type !== 3)
   filterednotes.forEach(note => {
-  //if (note._customData._track == "hollowNoteMorph") {
+  //if (note._customData._track == "hollowNote") {
    note._customData = {}
    note._customData._noteJumpMovementSpeed = NJS;
    note._customData._noteJumpStartBeatOffset = NJSOffset;
@@ -237,85 +239,189 @@ function hollowNoteMorph (beat, endBeat, NJS, NJSOffset) {
    note._customData._animation = {}
    note._customData._animation._dissolve = [[0,0]]
    //note._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
-   //note._customData._animation._color = [[0,0,0,-1,0],[1,0,1,-1,0.44,"easeStep"]]
-  	// 1
-    let notef1 = JSON.parse(JSON.stringify(note));
-    notef1._customData = {}
-    notef1._customData._disableSpawnEffect = true;
-    notef1._customData._disableNoteLook = true;
-    notef1._customData._disableNoteGravity = true;
-    notef1._customData._fake = true;
-    notef1._customData._interactable = false;
-    notef1._time
-    notef1._customData._animation = {}
-    notef1._customData._animation._scale = [[1,0.05,1,0.3],[1,1,1,0.4]];
-    notef1._customData._animation._position = [[0,0.4,0,0.3],[0,0,0,0.4]];
-    notef1._customData._animation._dissolve = [[1,0]]
-    notef1._customData._animation._dissolveArrow = [[0,0]]
-    //notef1._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
-    //notef1._customData._animation._color = [[1,1,1,1,0]]
-    notef1._customData._noteJumpMovementSpeed = NJS;
-    notef1._customData._noteJumpStartBeatOffset = NJSOffset;
-    _notes.push(notef1);
-	// 2
-    let notef2 = JSON.parse(JSON.stringify(note));
-    notef2._customData = {}
-    notef2._customData._disableSpawnEffect = true;
-    notef2._customData._disableNoteLook = true;
-    notef2._customData._disableNoteGravity = true;
-    notef2._customData._fake = true;
-    notef2._customData._interactable = false;
-    notef2._time
-    notef2._customData._animation = {}
-    notef2._customData._animation._scale = [[1,0.05,1,0.3],[1,1,1,0.4]];
-    notef2._customData._animation._position = [[0.,-0.4,0,0.3],[0,0,0,0.4]];
-    notef2._customData._animation._dissolve = [[1,0]]
-    notef2._customData._animation._dissolveArrow = [[0,0]]
-    //notef2._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
-    //notef2._customData._animation._color = [[1,1,1,1,0]]
-    notef2._customData._noteJumpMovementSpeed = NJS;
-    notef2._customData._noteJumpStartBeatOffset = NJSOffset;
-    _notes.push(notef2);
-	// 3
-    let notef3 = JSON.parse(JSON.stringify(note));
-    notef3._customData = {}
-    notef3._customData._disableSpawnEffect = true;
-    notef3._customData._disableNoteLook = true;
-    notef3._customData._disableNoteGravity = true;
-    notef3._customData._fake = true;
-    notef3._customData._interactable = false;
-    notef3._time
-    notef3._customData._animation = {}
-    notef3._customData._animation._scale = [[0.05,1,1,0.3],[1,1,1,0.4]];
-    notef3._customData._animation._position = [[-0.4,0,0,0.3],[0,0,0,0.4]];
-    notef3._customData._animation._dissolve = [[1,0]]
-    notef3._customData._animation._dissolveArrow = [[0,0]]
-    //notef3._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
-    //notef3._customData._animation._color = [[1,1,1,1,0]]
-    notef3._customData._noteJumpMovementSpeed = NJS;
-    notef3._customData._noteJumpStartBeatOffset = NJSOffset;
-    _notes.push(notef3);
-	// 4
-    let notef4 = JSON.parse(JSON.stringify(note));
-    notef4._customData = {}
-    notef4._customData._disableSpawnEffect = true;
-    notef4._customData._disableNoteLook = true;
-    notef4._customData._disableNoteGravity = true;
-    notef4._customData._fake = true;
-    notef4._customData._interactable = false;
-    notef4._time
-    notef4._customData._animation = {}
-    notef4._customData._animation._scale = [[0.05,1,1,0.3],[1,1,1,0.4]];
-    notef4._customData._animation._position = [[0.4,0,0,0.3],[0,0,0,0.4]];
-    notef4._customData._animation._dissolve = [[1,0]]
-    notef4._customData._animation._dissolveArrow = [[0,0]]
-    //notef4._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
-    //notef4._customData._animation._color = [[1,1,1,1,0]]
-    notef4._customData._noteJumpMovementSpeed = NJS;
-    notef4._customData._noteJumpStartBeatOffset = NJSOffset;
-    _notes.push(notef4);
-
-  // }
+    // normal or angle note
+	if ([0,1,2,3,8].some(x => note._cutDirection == x)) {
+		// 1
+		let notef1 = JSON.parse(JSON.stringify(note));
+		notef1._customData = {}
+		notef1._customData._disableSpawnEffect = true;
+		notef1._customData._disableNoteLook = true;
+		notef1._customData._disableNoteGravity = true;
+		notef1._customData._fake = true;
+		notef1._customData._interactable = false;
+		notef1._time
+		notef1._customData._animation = {}
+		notef1._customData._animation._scale = [[1,0.05,1,0.3],[1,1,1,0.4]];
+		notef1._customData._animation._position = [[0,0.4,0,0.3],[0,0,0,0.4]];
+		notef1._customData._animation._dissolve = [[1,0]]
+		notef1._customData._animation._dissolveArrow = [[0,0]]
+		//notef1._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef1._customData._animation._color = [[1,1,1,1,0]]
+		notef1._customData._noteJumpMovementSpeed = NJS;
+		notef1._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef1);
+		// 2
+		let notef2 = JSON.parse(JSON.stringify(note));
+		notef2._customData = {}
+		notef2._customData._disableSpawnEffect = true;
+		notef2._customData._disableNoteLook = true;
+		notef2._customData._disableNoteGravity = true;
+		notef2._customData._fake = true;
+		notef2._customData._interactable = false;
+		notef2._time
+		notef2._customData._animation = {}
+		notef2._customData._animation._scale = [[1,0.05,1,0.3],[1,1,1,0.4]];
+		notef2._customData._animation._position = [[0,-0.4,0,0.3],[0,0,0,0.4]];
+		notef2._customData._animation._dissolve = [[1,0]]
+		notef2._customData._animation._dissolveArrow = [[0,0]]
+		//notef2._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef2._customData._animation._color = [[1,1,1,1,0]]
+		notef2._customData._noteJumpMovementSpeed = NJS;
+		notef2._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef2);
+		// 3
+		let notef3 = JSON.parse(JSON.stringify(note));
+		notef3._customData = {}
+		notef3._customData._disableSpawnEffect = true;
+		notef3._customData._disableNoteLook = true;
+		notef3._customData._disableNoteGravity = true;
+		notef3._customData._fake = true;
+		notef3._customData._interactable = false;
+		notef3._time
+		notef3._customData._animation = {}
+		notef3._customData._animation._scale = [[0.05,1,1,0.3],[1,1,1,0.4]];
+		notef3._customData._animation._position = [[-0.4,0,0,0.3],[0,0,0,0.4]];
+		notef3._customData._animation._dissolve = [[1,0]]
+		notef3._customData._animation._dissolveArrow = [[0,0]]
+		//notef3._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef3._customData._animation._color = [[1,1,1,1,0]]
+		notef3._customData._noteJumpMovementSpeed = NJS;
+		notef3._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef3);
+		// 4
+		let notef4 = JSON.parse(JSON.stringify(note));
+		notef4._customData = {}
+		notef4._customData._disableSpawnEffect = true;
+		notef4._customData._disableNoteLook = true;
+		notef4._customData._disableNoteGravity = true;
+		notef4._customData._fake = true;
+		notef4._customData._interactable = false;
+		notef4._time
+		notef4._customData._animation = {}
+		notef4._customData._animation._scale = [[0.05,1,1,0.3],[1,1,1,0.4]];
+		notef4._customData._animation._position = [[0.4,0,0,0.3],[0,0,0,0.4]];
+		notef4._customData._animation._dissolve = [[1,0]]
+		notef4._customData._animation._dissolveArrow = [[0,0]]
+		//notef4._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef4._customData._animation._color = [[1,1,1,1,0]]
+		notef4._customData._noteJumpMovementSpeed = NJS;
+		notef4._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef4);
+	}
+	else {
+		// 1
+		let notef1 = JSON.parse(JSON.stringify(note));
+		notef1._customData = {}
+		notef1._customData._disableSpawnEffect = true;
+		notef1._customData._disableNoteLook = true;
+		notef1._customData._disableNoteGravity = true;
+		notef1._customData._fake = true;
+		notef1._customData._interactable = false;
+		notef1._time
+		notef1._cutDirection = 8;
+		notef1._customData._animation = {}
+		notef1._customData._animation._scale = [[0.78,0.05,1,0.3],[0.1,0.1,0.1,0.4,"easeInCirc"]];
+		notef1._customData._animation._position = [[0.28243,0.282843,0,0.3],[0,0,0,0.4]];
+		notef1._customData._animation._localRotation = [[0,0,-45,0]];
+		notef1._customData._animation._dissolve = [[1,0]]
+		notef1._customData._animation._dissolveArrow = [[0,0]]
+		//notef1._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef1._customData._animation._color = [[1,1,1,1,0]]
+		notef1._customData._noteJumpMovementSpeed = NJS;
+		notef1._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef1);
+		// 2
+		let notef2 = JSON.parse(JSON.stringify(note));
+		notef2._customData = {}
+		notef2._customData._disableSpawnEffect = true;
+		notef2._customData._disableNoteLook = true;
+		notef2._customData._disableNoteGravity = true;
+		notef2._customData._fake = true;
+		notef2._customData._interactable = false;
+		notef2._time
+		notef1._cutDirection = 8;
+		notef2._customData._animation = {}
+		notef2._customData._animation._scale = [[0.78,0.05,1,0.3],[0.1,0.1,0.1,0.4,"easeInCirc"]];
+		notef2._customData._animation._position = [[-0.282843,-0.282843,0,0.3],[0,0,0,0.4]];
+		notef2._customData._animation._localRotation = [[0,0,-45,0]]
+		notef2._customData._animation._dissolve = [[1,0]]
+		notef2._customData._animation._dissolveArrow = [[0,0]]
+		//notef2._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef2._customData._animation._color = [[1,1,1,1,0]]
+		notef2._customData._noteJumpMovementSpeed = NJS;
+		notef2._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef2);
+		// 3
+		let notef3 = JSON.parse(JSON.stringify(note));
+		notef3._customData = {}
+		notef3._customData._disableSpawnEffect = true;
+		notef3._customData._disableNoteLook = true;
+		notef3._customData._disableNoteGravity = true;
+		notef3._customData._fake = true;
+		notef3._customData._interactable = false;
+		notef3._time
+		notef1._cutDirection = 8;
+		notef3._customData._animation = {}
+		notef3._customData._animation._scale = [[0.05,0.78,1,0.3],[0.1,0.1,0.1,0.4,"easeInCirc"]];
+		notef3._customData._animation._position = [[-0.282843,0.282843,0,0.3],[0,0,0,0.4]];
+		notef3._customData._animation._localRotation = [[0,0,-45,0]];
+		notef3._customData._animation._dissolve = [[1,0]]
+		notef3._customData._animation._dissolveArrow = [[0,0]]
+		//notef3._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef3._customData._animation._color = [[1,1,1,1,0]]
+		notef3._customData._noteJumpMovementSpeed = NJS;
+		notef3._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef3);
+		// 4
+		let notef4 = JSON.parse(JSON.stringify(note));
+		notef4._customData = {}
+		notef4._customData._disableSpawnEffect = true;
+		notef4._customData._disableNoteLook = true;
+		notef4._customData._disableNoteGravity = true;
+		notef4._customData._fake = true;
+		notef4._customData._interactable = false;
+		notef4._time
+		notef1._cutDirection = 8;
+		notef4._customData._animation = {}
+		notef4._customData._animation._scale = [[0.05,0.78,1,0.3],[0.1,0.1,0.1,0.4,"easeInCirc"]];
+		notef4._customData._animation._position = [[0.282843,-0.282843,0,0.3],[0,0,0,0.4]];
+		notef4._customData._animation._localRotation = [[0,0,-45,0]]
+		notef4._customData._animation._dissolve = [[1,0]]
+		notef4._customData._animation._dissolveArrow = [[0,0]]
+		//notef4._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef4._customData._animation._color = [[1,1,1,1,0]]
+		notef4._customData._noteJumpMovementSpeed = NJS;
+		notef4._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef4);
+		// 5
+		let notef5 = JSON.parse(JSON.stringify(note));
+		notef5._customData = {}
+		notef5._customData._disableSpawnEffect = true;
+		notef5._customData._disableNoteLook = true;
+		notef5._customData._disableNoteGravity = true;
+		notef5._customData._fake = true;
+		notef5._customData._interactable = false;
+		notef5._time
+		notef5._customData._animation = {}
+		notef5._customData._animation._scale = [[0,0,0,0.3],[1,1,1,0.35]];
+		notef5._customData._animation._dissolveArrow = [[0,0]]
+		//notef5._customData._animation._rotation = [[-10,0,0,0],[0,0,0,0.25]];
+		//notef5._customData._animation._color = [[1,1,1,1,0]]
+		notef5._customData._noteJumpMovementSpeed = NJS;
+		notef5._customData._noteJumpStartBeatOffset = NJSOffset;
+		_notes.push(notef5);
+	}
+   // }
   });
 }
 
