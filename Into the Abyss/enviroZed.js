@@ -210,7 +210,40 @@ function animImport(track, envId, aniTime, aniDur) {
 			x._customData._animation._definitePosition.forEach(array => array[1]+=offset[1]);
 			x._customData._animation._definitePosition.forEach(array => array[2]+=offset[2]);
 			//x._customData._animation._definitePosition[0] = pillarPos; // to correct anim offset?hmmmm
-			
+
+			//reduce duplicate data points
+			//console.log("posi old long " + x._customData._animation._definitePosition.length);
+			xlong = x._customData._animation._definitePosition.length - 1;
+			for (let xtime = 1; xtime < xlong; ) {
+				if (x._customData._animation._definitePosition[xtime][0] == x._customData._animation._definitePosition[xtime-1][0] && 
+				    x._customData._animation._definitePosition[xtime][1] == x._customData._animation._definitePosition[xtime-1][1] &&
+					x._customData._animation._definitePosition[xtime][2] == x._customData._animation._definitePosition[xtime-1][2] &&
+					x._customData._animation._definitePosition[xtime][0] == x._customData._animation._definitePosition[xtime+1][0] && 
+				    x._customData._animation._definitePosition[xtime][1] == x._customData._animation._definitePosition[xtime+1][1] &&
+					x._customData._animation._definitePosition[xtime][2] == x._customData._animation._definitePosition[xtime+1][2])
+					{
+					x._customData._animation._definitePosition.splice(xtime,1);
+					xlong--;
+				} else {xtime++}
+			}
+			//console.log("posi new long " + x._customData._animation._definitePosition.length);
+
+			//console.log("scale old long " + x._customData._animation._scale.length);
+			xlong = x._customData._animation._scale.length - 1;
+			for (let xtime = 1; xtime < xlong; ) {
+				if (x._customData._animation._scale[xtime][0] == x._customData._animation._scale[xtime-1][0] && 
+				    x._customData._animation._scale[xtime][1] == x._customData._animation._scale[xtime-1][1] &&
+					x._customData._animation._scale[xtime][2] == x._customData._animation._scale[xtime-1][2] &&
+					x._customData._animation._scale[xtime][0] == x._customData._animation._scale[xtime+1][0] && 
+				    x._customData._animation._scale[xtime][1] == x._customData._animation._scale[xtime+1][1] &&
+					x._customData._animation._scale[xtime][2] == x._customData._animation._scale[xtime+1][2])
+					{
+					x._customData._animation._scale.splice(xtime,1);
+					xlong--;
+				} else {xtime++}
+			}
+			//console.log("scale new long " + x._customData._animation._scale.length);
+
 
 			map._customData._customEvents.push({
 				_time: aniTime, // to define as required
