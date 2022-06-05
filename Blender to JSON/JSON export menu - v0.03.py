@@ -167,18 +167,13 @@ class WM_OT_Blend2JSON(Operator):
             if mytool.keysOnly == True:
                 frames = [mytool.f_begin,mytool.f_end]
                 for fc in sel.animation_data.action.fcurves :
-                    #if fc.data_path.endswith(('location','rotation_euler','rotation_quaternion','scale')):
-                    if fc.data_path.endswith(('location')):
+                    if fc.data_path.endswith(('location','rotation_euler','scale')):
                         for key in fc.keyframe_points :
-                            #print('frame:',key.co[0],'value:',key.co[1])
-                            frames += [key.co[0]]
-
-                kfs = int(len(frames)/3) #divide for xyz
-                #print(kfs)            
-
+                            if key.co[0] not in frames:
+                                frames += [key.co[0]]
 
             for frame in range(mytool.f_begin, mytool.f_end+1):
-#keyframes only
+                #keyframes only
                 if mytool.keysOnly == True:
                     if frame in frames:
                         bpy.context.scene.frame_set(frame)
@@ -203,7 +198,7 @@ class WM_OT_Blend2JSON(Operator):
                         scal+= json.dumps(scalJson) + ','
                         # reset pivot
                         bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='MEDIAN')
-#all frames
+                #all frames
                 else:
                     bpy.context.scene.frame_set(frame)
                     # set BS pivot point for walls
