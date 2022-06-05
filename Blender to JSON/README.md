@@ -7,3 +7,7 @@ For actual walls, SW is the way to go, as this script is very basic for walls ri
 For environment enhancements, it works quite well.
 
 (note, script may be either pasted into scripting window for session use, or imported)
+
+Keyframes only currently only reads location (so it won't read the keyframe if it's only scale and/or rotation)
+
+![](menu.png)
