@@ -6,6 +6,8 @@ SW conversion not required, may be imported directly in js script. (an example m
 For actual walls, SW is the way to go, as this script is very basic for walls right now.
 For environment enhancements, it works quite well.
 
+- v0.04 added color detection, minor fixes
+
 (note, script may be either pasted into scripting window for session use, or imported)
 
 ![](menu.png)
