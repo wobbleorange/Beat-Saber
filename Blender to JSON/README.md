@@ -8,6 +8,7 @@ For environment enhancements, it works quite well.
 
 - v0.04 added color detection, minor fixes
 - v0.05 complete redo of vector method (from front end to back end, ~8x faster)
+- v0.06 added note export, wall thickness and alpha override
 
 (note, script may be either pasted into scripting window for session use, or imported)
 
