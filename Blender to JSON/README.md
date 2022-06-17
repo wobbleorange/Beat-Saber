@@ -7,7 +7,7 @@ SW conversion not required, may be imported directly in js script. (example scri
 - v0.05 complete redo of vector method (from front end to back end, ~8x faster)
 - v0.06 added note export, wall thickness and alpha override
 - v0.07 added environment materials. specific env's (BTS/gaga/billie) replaced with Environment. Will defaul to BTS pillar, or read entered material in second material slot.
-- blend2env updated to work with material read from blender: bts (pillar, laser, pillar with laser), gaga (backcube), billie (leftfarrail)
+- blend2env updated to work with material read from blender: bts (pillar, laser, pillarwithlaser), gaga (backcube), billie (leftfarrail)
 
 (note, script may be either pasted into scripting window for session use, or imported)
 
