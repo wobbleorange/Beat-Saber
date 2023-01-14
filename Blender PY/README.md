@@ -334,4 +334,94 @@ for i in range (5,25):
     bpy.ops.anim.keyframe_insert_menu(type='Rotation')
 ```
 
+### sort and in/out anim
+This will sort all objects per distance from either the 3D cursor, or a vector. Then will create in animation in and/or out to the original position.
+(If you only want in or out, the other may be removed. Can use locatioin rotation scale as required)
 
+
+```
+import bpy
+import random
+from mathutils import Vector
+selection = bpy.context.selected_objects
+
+
+delay = 5               # <-- adjust
+duration = 20 + delay    # <-- adjust
+startFrame = 10     # <-- adjust
+
+#v = Vector((1, 2, 3))                      # <-- choose enter vector
+v = bpy.context.scene.cursor.location       # <-- or use 3D cursor location
+
+selection.sort(key=lambda o:
+             (o.matrix_world.to_translation() - v).length)
+for ob in selection:
+    ob.name = "sortCube"
+    ob.data.name = "sortCube"
+
+
+centerFrame = duration + len(selection) + (startFrame - 1)
+
+bpy.context.scene.frame_set(centerFrame)
+bpy.ops.anim.keyframe_insert_menu(type='LocRotScale')
+bpy.ops.object.select_all(action='DESELECT')
+
+
+#in anim
+frameZero = centerFrame
+for sel in reversed(selection):
+    sel.select_set(True)
+
+    bpy.context.scene.frame_set(frameZero - delay)
+    bpy.ops.anim.keyframe_insert_menu(type='LocRotScale')
+    bpy.context.scene.frame_set(frameZero - duration)
+
+    sel.location.x = 0         # <-- adjust
+    sel.location.y = 0         # <-- adjust
+    sel.location.z = 10        # <-- adjust
+    bpy.ops.anim.keyframe_insert_menu(type='Location')
+
+    #sel.rotation_euler.x =  200      # <-- adjust
+    #sel.rotation_euler.y = 10        # <-- adjust
+    #sel.rotation_euler.z = -22      # <-- adjust
+    #bpy.ops.anim.keyframe_insert_menu(type='Rotation')
+
+    #sel.scale.x = 20      # <-- adjust
+    #sel.scale.y = 20      # <-- adjust
+    #sel.scale.z = 20      # <-- adjust
+    #bpy.ops.anim.keyframe_insert_menu(type='Scaling')
+
+    sel.select_set(False)
+    frameZero -= 1
+
+
+# out anim
+frameZero = centerFrame
+for sel in selection:
+    sel.select_set(True)
+
+    bpy.context.scene.frame_set(frameZero + delay)
+    bpy.ops.anim.keyframe_insert_menu(type='LocRotScale')
+    bpy.context.scene.frame_set(frameZero + duration)
+
+    sel.location.x = 0      # <-- adjust
+    sel.location.y = 0        # <-- adjust
+    sel.location.z = -10      # <-- adjust
+    bpy.ops.anim.keyframe_insert_menu(type='Location')
+
+    #sel.rotation_euler.x =  200      # <-- adjust
+    #sel.rotation_euler.y = 10        # <-- adjust
+    #sel.rotation_euler.z = -22      # <-- adjust
+    #bpy.ops.anim.keyframe_insert_menu(type='Rotation')
+
+    #sel.scale.x = 2      # <-- adjust
+    #sel.scale.y = 2      # <-- adjust
+    #sel.scale.z = 2      # <-- adjust
+    #bpy.ops.anim.keyframe_insert_menu(type='Scaling')
+
+    sel.select_set(False)
+    frameZero += 1
+
+bpy.context.scene.frame_set(centerFrame)
+```
+![inoutanim](images/inoutanim.png)
