@@ -35,7 +35,7 @@ bpy.ops.mesh.primitive_cube_add(size=2, location=(0, -2*radius ,0))
 bpy.context.active_object.scale = (0.866*width, 0.496*width, Zthick)
 ```
 
-![triangle](images/triange.png)
+![triangle](images/triangle.png)
 
 
 ### circle / polygon maker
