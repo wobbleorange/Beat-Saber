@@ -336,7 +336,7 @@ for i in range (5,25):
 
 ### sort and in/out anim
 This will sort all objects per distance from either the 3D cursor, or a vector. Then will create in animation in and/or out to the original position.
-(If you only want in or out, the other may be removed. Can use locatioin rotation scale as required)
+(If you only want in or out, the other may be removed. Can use location rotation scale as required)
 
 
 ```
