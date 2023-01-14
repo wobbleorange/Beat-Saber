@@ -293,6 +293,211 @@ for i in range (1,total):
 
 ![tunnel](images/tunnel.png)
 
+### bezier curve to cubes
+This will convert a bezier curve or circle into a string of cubes.
+For the moment works best if the curve is flat on the Y axis. (still trying to figure out the proper vectoring)
+
+```
+import bpy
+from mathutils import Vector
+import bmesh
+import math
+from math import degrees, pi
+
+
+obj = bpy.context.view_layer.objects.active
+mesh = obj.data
+vertex = []
+vertexData = []
+aXData = []
+aYData = []
+aZData = []
+defpos = []
+time = 0
+v = -1
+vtot = len(mesh.vertices)-1
+aX1 = 0
+aY1 = 0
+aZ1 = 0
+
+
+# detect if open ended or complete circle
+bpy.ops.object.mode_set(mode='EDIT')
+bm = bmesh.from_edit_mesh(mesh)
+vtotal = len(bm.verts)
+for vert in bm.verts:
+    vl=[]
+    for l in vert.link_edges:
+        vl.append(l.other_vert(vert).index)
+
+if hasattr(bm.verts, "ensure_lookup_table"): 
+    bm.verts.ensure_lookup_table()
+if len(bm.verts[vtotal-1].link_edges) == 1:
+    #print("open ended")
+    isCircle = False
+else:
+    #print("circle")
+    isCircle = True
+bpy.ops.object.mode_set(mode='OBJECT')
+# ======
+
+
+#print("========================= vertices: " + str(vtot+1))
+
+for vert in mesh.vertices:
+    
+    v += 1
+    print(v, " vvvvvvv ",vtot)
+    time = v/vtot
+    print(time)
+
+    v_co_world = obj.matrix_world @ obj.data.vertices[v].co
+    vertexData.append(v_co_world)
+
+    if (len(vertexData) > 1 & len(vertexData) < len(mesh.vertices)):
+        vert1 = Vector((vertexData[v-1][0], vertexData[v-1][1], vertexData[v-1][2]))
+        vert2 = Vector((vertexData[v][0], vertexData[v][1], vertexData[v][2]))
+        v1 = vert2 - vert1
+        v2X = Vector((1, 0, 0))
+        v2Y = Vector((1, 0, 0))
+        v2Z = Vector((0, 1, 0))
+        loc1 = vert2.lerp(vert1,0.5)
+        defpos.append([loc1[0],loc1[1],loc1[2],time])
+        dist = math.dist(vert2, vert1)
+        #print(dist, " <=========== distaaance")
+
+
+# X angle
+        if (vert2[2] > vert1[2]) & (vert2[1] > vert1[1]) :
+            Xoffset = 1
+        elif (vert2[2] < vert1[2]) & (vert2[1] > vert1[1]) :
+            Xoffset = 1
+        elif (vert2[2] < vert1[2]) & (vert2[1] < vert1[1]) :
+            Xoffset = -1
+        elif (vert2[2] > vert1[2]) & (vert2[1] < vert1[1]) :
+            Xoffset = 1
+        else:
+            Xoffset = 1
+
+        a1X = v1.angle(v2X) - pi/2
+        #if a1X >= pi * 0.5:
+        #    print("lalala      a1X >= pi * 0.5")
+        #    a1X = 2*pi - a1X
+        #print("{:.2f} degrees X".format(degrees(a1X)))
+        
+        aXData.append(a1X)
+
+# Y angle
+        if (vert2[2] > vert1[2]) & (vert2[0] > vert1[0]) :
+            Yoffset = -1
+        elif (vert2[2] < vert1[2]) & (vert2[0] > vert1[0]) :
+            Yoffset = 1
+        elif (vert2[2] < vert1[2]) & (vert2[0] < vert1[0]) :
+            Yoffset = -1
+        elif(vert2[2] > vert1[2]) & (vert2[0] < vert1[0]) :
+            Yoffset = 1
+        else:
+            Yoffset = 1
+            
+        a1Y = v1.angle(v2Y)
+        if a1Y > pi * 0.5:
+            a1Y = pi - a1Y
+        #print("{:.2f} degrees".format(degrees(a1)))
+        
+        aYData.append(a1Y)
+
+# Z angle???
+        if (vert2[0] > vert1[0]) & (vert2[1] > vert1[1]) :
+            Zoffset = -1
+        elif (vert2[0] < vert1[0]) & (vert2[1] > vert1[1]) :
+            Zoffset = 1
+        elif (vert2[0] < vert1[0]) & (vert2[1] < vert1[1]) :
+            Zoffset = -1
+        elif (vert2[0] > vert1[0]) & (vert2[1] < vert1[1]) :
+            Zoffset = 1
+        else:
+            Zoffset = 1
+
+        a1Z = v1.angle(v2Z) - pi/2
+        if a1Z >= pi * 0.5: #>= 90 deg
+            #print("lalala      a1Z >= pi * 0.5")
+            a1Z = pi - a1Z
+            #a1Z = a1Z - (pi*0.5)
+        #print("{:.2f} degrees Z".format(degrees(a1Z)))
+
+        aZData.append(a1Z)
+        
+        bpy.ops.mesh.primitive_cube_add(size=2, location=loc1, scale=(1, 1, 1))
+        bpy.ops.transform.resize(value=(0.5*dist, 0.15, 0.15))
+        
+        #bpy.context.active_object.rotation_euler = (0,Yoffset*aYData[v-1],0)
+        bpy.context.active_object.rotation_euler = (0,Yoffset*aYData[v-1],Zoffset*aZData[v-1])
+        #bpy.context.active_object.rotation_euler = (Xoffset*aXData[v-1],Yoffset*aYData[v-1],0)
+        #bpy.context.active_object.rotation_euler = (Xoffset*aXData[v-1],Yoffset*aYData[v-1],Zoffset*aZData[v-1])
+        #bpy.ops.object.move_to_collection(collection_index=2)
+
+
+# add cube to close circles
+if isCircle == True:
+    vert1 = Vector((vertexData[vtot][0], vertexData[vtot][1], vertexData[vtot][2]))
+    vert2 = Vector((vertexData[0][0], vertexData[0][1], vertexData[0][2]))
+
+    v1 = vert2 - vert1
+    v2X = Vector((0, 1, 0))
+    v2Y = Vector((0, 0, 1))
+    loc1 = vert2.lerp(vert1,0.5)
+    dist = math.dist(vert2, vert1)
+    #print(dist, " <=========== distaaance")
+
+
+# X angle
+    if (vert2[2] > vert1[2]) & (vert2[1] > vert1[1]) :
+        Xoffset = -1
+    elif (vert2[2] < vert1[2]) & (vert2[1] > vert1[1]) :
+        Xoffset = 1
+    elif (vert2[2] < vert1[2]) & (vert2[1] < vert1[1]) :
+        Xoffset = -1
+    elif (vert2[2] > vert1[2]) & (vert2[1] < vert1[1]) :
+        Xoffset = 1
+    else:
+        Xoffset = 1
+
+    a1X = v1.angle(v2X) - pi/2
+    #if a1X >= pi * 0.5:
+    #    print("lalala      a1X >= pi * 0.5")
+    #    a1X = 2*pi - a1X
+    #print("{:.2f} degrees X".format(degrees(a1X)))
+
+# Y angle
+    if (vert2[2] > vert1[2]) & (vert2[0] > vert1[0]) :
+        Yoffset = 1
+    elif (vert2[2] < vert1[2]) & (vert2[0] > vert1[0]) :
+        Yoffset = -1
+    elif (vert2[2] < vert1[2]) & (vert2[0] < vert1[0]) :
+        Yoffset = 1
+    elif(vert2[2] > vert1[2]) & (vert2[0] < vert1[0]) :
+        Yoffset = -1
+    else:
+        Yoffset = 1
+        
+    a1Y = v1.angle(v2Y)
+    if a1Y > pi * 0.5:
+        a1Y = pi - a1Y
+    #print("{:.2f} degrees".format(degrees(a1)))
+
+# Z angle???
+
+
+    bpy.ops.mesh.primitive_cube_add(size=2, location=loc1, scale=(1, 1, 1))
+    bpy.ops.transform.resize(value=(0.15, 0.15, 0.5*dist))
+    
+    bpy.context.active_object.rotation_euler = (Xoffset*a1X,Yoffset*a1Y,0)
+
+# =====
+```
+![curvetocube](images/curvetocube.png)
+
+
 
 ## Animating
 
