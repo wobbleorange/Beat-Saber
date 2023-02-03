@@ -9,7 +9,7 @@ No after scripting required. Simply copy and paste output into dat file. Geometr
 
 
 Materials in order used as
-1. color    (only if Standard shader used)
+1. color    (only read if Standard shader used)
 2. type    (Cube, Cylinder etc)
 3. shader    (Standard, BTSPillar, TransparentLight ...) (template blend should have all possibilities already as materials)
 4. track    (optional, will default to "track")* note, a sequential number will be added to this if animated.
