@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const INPUT = "NormalStandard.dat"
+const INPUT = "ExpertStandardV3_Old.dat"
 const OUTPUT = "ExpertStandardV3.dat"
 
 let map = JSON.parse(fs.readFileSync(INPUT));
@@ -17,7 +17,9 @@ const notes = map.colorNotes;
 const environment = customData.environment;
 const customEvents = customData.customEvents;
 const fakeColorNotes = customData.fakeColorNotes;
-const pointDefinitions = customData.pointDefinitions
+const pointDefinitions = customData.pointDefinitions;
+
+let cube = 0;	// continuous counter for all
 
 
 obstacles.forEach(wall => {
@@ -75,6 +77,27 @@ function copy(obj) {
         newObj[key] = copy(obj[key]);
     }
     return newObj
+}
+
+
+function shuffle(what) {
+	array = copy(what)
+
+	var ll = array.length,
+		j = 0,
+		temp;
+
+	while (ll--) {
+
+		j = Math.floor(Math.random() * (ll+1));
+
+		// swap randomly chosen element with current element
+		temp = array[ll];
+		array[ll] = array[j];
+		array[j] = temp;
+
+	}
+	return array;
 }
 
 
@@ -631,6 +654,144 @@ function noteSnow (beat, endBeat, amount) {
 
 
 
+// -- cube wall functions -----------------------------------------------------------------------------------------------------------------
+
+
+function cubeSpiralMultiLCW (beat, diameter, zzMax, zzMin, spins, duration, repeats, delay, track) {
+
+	zz = zzMax;
+	zzz = ((zzMax - zzMin) / 8) / spins;
+	
+	d1 = diameter
+	d2 = d1 * 0.707
+	
+	ss = 0.125 / spins
+	tt = 0
+	tt2 = 0
+	rr = 0
+	spiralSpins = [[-d1, 0, zz, 0, "splineCatmullRom"]];
+	spiralRot = [[0, 0, rr, 0]];
+
+	for (i = 0; i < spins; i++) {
+		spiralSpins.push([-d2, d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[0, d1, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[d2, d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[d1, 0, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[d2, -d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[0, -d1, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[-d2, -d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[-d1, 0, zz-=zzz, tt+=ss, "splineCatmullRom"]);
+		
+		spiralRot.push([0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss]);
+		}
+		spiralSpins[spiralSpins.length-1][3] = 0.99;
+		spiralSpins.push([0,-1000,0,1]);
+	
+	for (ii = 0; ii < repeats; ii++) {
+		cube += 1;
+		environment.push({
+			geometry:{
+			type:"Cube",
+			material:{
+				shader:"BTSPillar"
+			}},
+			position:[0,-1000,0],
+			scale: [3,3,3],
+			rotation: [0,0,0],
+			track: track + cube
+		});
+
+
+		customEvents.push({
+			b: beat + delay*ii,
+			t: "AnimateTrack",
+			d: {
+				track: track + cube,
+				duration: duration,
+				position: spiralSpins
+				//rotation: spiralRot
+				//scale: [[1,1,1,0.05],[Xsc,1,1,0.30],[1.45,0.55,1.45,0.40],[1,1,1,0.5]]
+			}
+		});
+	}
+}
+
+
+function cubeSpiralMultiRCCW (beat, diameter, zzMax, zzMin, spins, duration, repeats, delay, track) {
+
+	zz = zzMax;
+	zzz = ((zzMax - zzMin) / 8) / spins;
+	
+	d1 = diameter
+	d2 = d1 * 0.707
+	
+	ss = 0.125 / spins
+	tt = 0
+	tt2 = 0
+	rr = 0
+	spiralSpins = [[d1, 0, zz, 0, "splineCatmullRom"]];
+	spiralRot = [[0, 0, rr, 0]];
+
+	for (i = 0; i < spins; i++) {
+		spiralSpins.push([d2, d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[0, d1, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[-d2, d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[-d1, 0, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[-d2, -d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[0, -d1, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[d2, -d2, zz-=zzz, tt+=ss, "splineCatmullRom"],
+						[d1, 0, zz-=zzz, tt+=ss, "splineCatmullRom"]);
+		
+		spiralRot.push([0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss],
+						[0, 0, rr-=45, tt2+=ss]);
+	}
+		spiralSpins[spiralSpins.length-1][3] = 0.99;
+		spiralSpins.push([0,-1000,0,1]);
+	
+
+	for (ii = 0; ii < repeats; ii++) {
+		cube += 1;
+		environment.push({
+			geometry:{
+			type:"Cube",
+			material:{
+				shader:"BTSPillar"
+			}},
+			position:[0,-1000,0],
+			scale: [3,3,3],
+			rotation: [0,0,0],
+			track: track + cube
+		});
+
+
+		customEvents.push({
+			b: beat + delay*ii,
+			t: "AnimateTrack",
+			d: {
+				track: track + cube,
+				duration: duration,
+				position: spiralSpins
+				//rotation: spiralRot
+				//scale: [[1,1,1,0.05],[Xsc,1,1,0.30],[1.45,0.55,1.45,0.40],[1,1,1,0.5]]
+			}
+		});			
+	}
+}
+
+
 
 
 // WRITE YOUR SCRIPT IN HERE ˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇˇ
@@ -656,6 +817,19 @@ amountPerBeat(40,60,20) // example with blocks
 
 //sparks(5, 52, 1, 6, 35, -3, 22)
 sparksRain(0.5,100,0)
+
+
+
+cubeSpiralMultiLCW(4, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiRCCW(8, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiLCW(12, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiRCCW(16, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiLCW(20, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiRCCW(24, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiLCW(28, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+cubeSpiralMultiRCCW(32, 20, 120, -20, 1, 4, 20, 0.125, "sprrr");
+
+
 
 
 // WRITE YOUR SCRIPT UP THERE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
